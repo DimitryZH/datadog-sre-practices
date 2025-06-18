@@ -1,107 +1,48 @@
 
-# Datadog APM Workflow Guide: Analyzing Metrics and Traces to Assess Performance
 
-## Overview
-This guide demonstrates how to use **Datadog's Application Performance Monitoring (APM)** to assess the behavior and performance of a distributed microservices application. Through metrics, traces, and visualizations, you will develop insight into system performance under normal conditions and begin to identify opportunities for optimization.
+#  Datadog SRE Practices
 
----
+This repository is a curated collection of **practical Site Reliability Engineering (SRE) workflows** using **Datadog**. It covers real-world techniques for application observability, performance monitoring, incident response, and reliability metrics.
 
-## 1. Understanding Application Architecture
+> These exercises are structured to simulate production environments and support hands-on exploration of metrics, traces, and service behavior using Datadog.
 
-The monitored application consists of multiple services running in Docker containers. The services analyzed in this workflow include:
+You'll explore how to **understand application performance**, **accurately monitor infrastructure and networking in real time**, and **implement SLO-driven strategies**—ensuring you can quickly detect, analyze, and resolve system-wide issues.
 
-- **Frontend service** (Next.js)
-- **Backend service** (Ruby on Rails)
-- **Discount service** (Python/Flask)
-- **Ads service** (Java/Spring Boot)
-- **PostgreSQL database**
+By working through these projects, you will learn how to:
 
-Focus: **Discount service**, which handles coupon codes and promotions.
+- ✅ Track service health by interpreting key application performance metrics (e.g., request volume, error rate, latency)
+- ✅ Investigate infrastructure metrics by filtering, grouping, and visualizing data with tags
+- ✅ Gain deep visibility into network performance to identify bottlenecks and failures
+- ✅ Establish effective SLIs, set realistic SLO targets, and manage SLOs with Datadog
+- ✅ Centralize and manage incident response with observability tooling
 
----
+## Application Architecture
 
-## 2. Accessing Trace Explorer
+The project simulates a containerized microservices architecture consisting of:
 
-1. Navigate to **APM > Traces > Explorer** in the Datadog interface.
-2. Close the introductory banner to maximize the workspace.
-3. Filter by environment:
-4. Observe the reporting services and live trace data.
-5. Expand the **Requests, Errors, and Latency (RED)** section to see service summaries.
+- **Frontend service** – Next.js application
+- **Backend service** – Ruby on Rails (business logic)
+- **Discounts service** – Python/Flask (promotions API)
+- **Ads service** – Java/Spring Boot (third-party ad server)
+- **PostgreSQL** – Relational database
 
-
-![apm-traces-explorer](https://github.com/user-attachments/assets/4c899920-c8e5-4a4a-9e85-a4d6a29aa5de)
-
-## 3. Exploring Service-Level RED Metrics
-
-1. Go to **APM > Software Catalog > Services**.
-2. Select the **discount** service and click **Service Page**.
-3. Confirm:
-- Metadata (language, type)
-- Environment tag (`env:apm-getting-started`)
-- Primary operation name (e.g., `flask.request`)
-4. Set the time range to **Past 15 minutes**.
-
-apm-software-catalog-services.gif
-
-### RED Metrics
-- **Requests & Errors**: Observe spikes in traffic or failure rates.
-- **Latency**: Toggle between `p50`, `p75`, and `p90` to assess outliers.
-- **Downstream Time**: See if latency is due to downstream services (e.g., `postgres`).
+Each service is instrumented with Datadog Agents to stream telemetry for analysis.
 
 
-![latency-graph](https://github.com/user-attachments/assets/e6c1f14e-1a55-4a23-8fcf-05711caf4ace)
+##  Project Topics
 
-## 4. Endpoint-Level Metric Analysis
-
-1. Scroll to the **Endpoints** section.
-2. Focus on:
-- `GET /discount`
-- `GET /discount-code`
-3. Use the legend to isolate the `GET /discount` data.
-4. Click **Resource Page** for that endpoint.
-
-### Endpoint Resource Page
-- Confirm the primary operation (`flask.request`).
-- Identify latency spikes.
-- Click a spike to open the **Trace View** side panel.
-  
-
-![endpoint-resource-page](https://github.com/user-attachments/assets/5177a504-757d-428e-b8b6-06addd1b7a0d)
-
-## 5. Analyzing Traces in Detail
-
-### Flame Graph
-- Shows all spans for the trace.
-- Top-level span (frontend service) shows entry point and full duration.
-- Hover to view:
-- Duration
-- Service
-- Operation name
+| # | Category | Description |
+|--:|:---------|:------------|
+| 1 | **APM Metrics & Traces** | Explore trace visualization and RED metrics |
+| &nbsp;&nbsp;&nbsp;1.1 | [Application Performance Monitoring Overview](topics/1-apm-metrics-traces/1.1-apm-overview.md) | Concepts, tags, spans, and trace ingestion |
+| &nbsp;&nbsp;&nbsp;1.2 | [Analyzing Metrics and Traces](topics/1-apm-metrics-traces/1.2-analyzing-metrics-and-traces.md) | Hands-on exploration with RED metrics, flame graphs, and outlier analysis |
+| 2 | [Infrastructure & Cloud Network Monitoring](topics/2-infra-network-monitoring.md) | Monitoring servers, containers, and network flows |
+| 3 | [Service Level Objectives (SLOs)](topics/3-slos.md) | Define and track service reliability metrics |
+| 4 | [Incident Management](topics/4-incident-management.md) | Runbooks, alert triage, root cause analysis, postmortems |
 
 
-![flame-graph](https://github.com/user-attachments/assets/6c2179c7-7029-497a-9c24-0529576e49c7)
-
-###  Waterfall View
-- Hierarchical timeline of spans.
-
-###  Span List
-- Table of all resources in the trace.
-- Sort/filter by:
-- Span count
-- Duration
-- Execution time
-- Service
-
-###  Map View
-- Service dependency diagram.
-- Shows percentage of execution time by service.
 
 
-##  Summary of Tasks Completed
 
-- Explored **Trace Explorer**
-- Navigated via **Software Catalog** to the service page
-- Analyzed **RED metrics** (service and endpoint levels)
-- Interpreted **Flame Graphs**
-- Used **Waterfall**, **Span List**, and **Map** views
+
 
