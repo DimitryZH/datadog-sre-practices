@@ -28,7 +28,8 @@ Focus: **Discount service**, which handles coupon codes and promotions.
 4. Observe the reporting services and live trace data.
 5. Expand the **Requests, Errors, and Latency (RED)** section to see service summaries.
 
-apm-traces-explorer.gif
+
+![apm-traces-explorer](https://github.com/user-attachments/assets/4c899920-c8e5-4a4a-9e85-a4d6a29aa5de)
 
 ## 3. Exploring Service-Level RED Metrics
 
@@ -47,7 +48,8 @@ apm-software-catalog-services.gif
 - **Latency**: Toggle between `p50`, `p75`, and `p90` to assess outliers.
 - **Downstream Time**: See if latency is due to downstream services (e.g., `postgres`).
 
-latency-graph.gif
+
+![latency-graph](https://github.com/user-attachments/assets/e6c1f14e-1a55-4a23-8fcf-05711caf4ace)
 
 ## 4. Endpoint-Level Metric Analysis
 
@@ -62,8 +64,9 @@ latency-graph.gif
 - Confirm the primary operation (`flask.request`).
 - Identify latency spikes.
 - Click a spike to open the **Trace View** side panel.
+  
 
-endpoint-resource-page.gif
+![endpoint-resource-page](https://github.com/user-attachments/assets/5177a504-757d-428e-b8b6-06addd1b7a0d)
 
 ## 5. Analyzing Traces in Detail
 
@@ -75,7 +78,8 @@ endpoint-resource-page.gif
 - Service
 - Operation name
 
-flame-graph.gif
+
+![flame-graph](https://github.com/user-attachments/assets/6c2179c7-7029-497a-9c24-0529576e49c7)
 
 ###  Waterfall View
 - Hierarchical timeline of spans.
