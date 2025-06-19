@@ -17,7 +17,7 @@ By working through these projects, you will learn how to:
 - ✅ Centralize and manage incident response with observability tooling
 
 ## Application Architecture
-
+ 
 The project simulates a containerized microservices architecture consisting of:
 
 - **Frontend service** – Next.js application
