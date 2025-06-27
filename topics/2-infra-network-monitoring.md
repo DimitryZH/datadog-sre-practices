@@ -64,6 +64,9 @@ The **Host List** is useful for direct queries, but the **Host Map** offers a **
 
 5. To the right of the **Fill** field, change the aggregation method from `avg` to `max` to identify peak values.
 
->  At this point, you'll likely see **only `discounts-host` turning red**, indicating ~100% CPU utilization, while other hosts remain normal. This confirms that the issue is isolated.
+>  At this point, you'll  see **only `discounts-host` turning red**, indicating ~100% CPU utilization, while other hosts remain normal. This confirms that the issue is isolated.
 
+![use_host_map](https://github.com/user-attachments/assets/42dee8c0-0606-48aa-ac26-9f4644622d88)
+
+---
 You’re now ready to notify the responsible team and create a **monitor** to automatically alert them if CPU usage spikes again.
