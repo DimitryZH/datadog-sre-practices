@@ -37,3 +37,33 @@ Datadog's **Host List** provides a real-time table of all monitored hosts, allow
 This interactive view helps you quickly analyze infrastructure distribution and isolate groups of interest.
 
 ![group_filter_hosts_list](https://github.com/user-attachments/assets/75982a24-794b-4d87-b2d0-31112824887d)
+
+
+###  2. Use Datadog's Host Map
+
+After noticing that `discounts-host` reports a CPU usage of ~100%, it's important to determine whether this is an isolated issue or indicative of a broader infrastructure problem. Datadog's **Host Map** is an ideal tool for this.
+
+####  Why Use Host Map?
+
+The **Host List** is useful for direct queries, but the **Host Map** offers a **visual overview** of your entire infrastructure—across platforms, cloud providers, data centers, and orchestration tools—surfacing trends and hotspots.
+
+####  Steps:
+
+1. Navigate to **Infrastructure > Hosts > Host Map**.
+2. Each host appears as a hexagon; applications running on the host are shown as boxes within the hexagon (e.g., `container`, `docker`, `agent`).
+3. **Color Fill in Host Map**:
+   - Background colors represent a selected metric defined in the **Fill** field.
+   - A legend in the lower-right corner helps interpret the colors.
+
+####  Explore Host Metrics Visually:
+
+4. In the **Fill** field at the top:
+   - Enter `system.disk.free` to visualize available disk space across hosts.
+   - Replace with `system.load.1` to visualize system load averages over the past minute.
+   - Finally, replace with **CPU Utilization** (first dropdown option) to highlight CPU usage.
+
+5. To the right of the **Fill** field, change the aggregation method from `avg` to `max` to identify peak values.
+
+>  At this point, you'll likely see **only `discounts-host` turning red**, indicating ~100% CPU utilization, while other hosts remain normal. This confirms that the issue is isolated.
+
+You’re now ready to notify the responsible team and create a **monitor** to automatically alert them if CPU usage spikes again.
