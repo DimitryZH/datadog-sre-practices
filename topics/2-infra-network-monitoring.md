@@ -35,3 +35,5 @@ Datadog's **Host List** provides a real-time table of all monitored hosts, allow
    - You now see only containerized hosts, grouped by instance type.
 
 This interactive view helps you quickly analyze infrastructure distribution and isolate groups of interest.
+
+![group_filter_hosts_list](https://github.com/user-attachments/assets/75982a24-794b-4d87-b2d0-31112824887d)
