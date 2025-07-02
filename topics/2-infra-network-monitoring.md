@@ -70,3 +70,145 @@ The **Host List** is useful for direct queries, but the **Host Map** offers a **
 
 ---
 You’re now ready to notify the responsible team and create a **monitor** to automatically alert them if CPU usage spikes again.
+
+
+
+###  3. Explore Host Details
+
+To dive deeper into the metrics of a specific host like `discounts-host`, you can access its full details directly from the Host Map.
+
+####  Steps:
+
+1. **Clear** any existing filters or groupings in the Host Map.
+2. **Click** the hexagon labeled `discounts-host` to open its detailed view.
+
+####  Host Detail Layout:
+
+- **Left Panel (Apps)**: Shows running applications on the host.
+- **Center Panel (Agent & System Info)**: Includes system details, metrics, containers, and Datadog Agent version.
+- **Right Panel (Tags)**: Lists all tags associated with the host.
+
+At the top, you’ll see a **horizontal menu of links** to explore more host data:
+- **Dashboard**, **Network**, **Processes**, **Containers**, etc.
+
+3. Click the **Dashboard** link to access the **prebuilt host dashboard**.
+
+####  What You’ll See:
+
+- **CPU Usage %** and **CPU Usage by Process %** charts show spikes nearing 100%.
+- **Hover over CPU Usage %** to observe that most high usage originates from the `system.cpu.user` metric.
+- These CPU spikes generally **correlate with the Load Averages chart**, suggesting user activity is driving load.
+- Other metrics such as **disk I/O, memory usage**, and **network traffic** appear unaffected.
+
+>  This host-specific dashboard is a powerful tool for **root cause analysis**, especially when correlating CPU load with user processes.
+
+###  4. Create a Monitor
+
+After confirming that high CPU usage on `discounts-host` is due to user space processes—and isolated to that host—you contact the responsible team. They begin investigating but ask you to set up a **Datadog monitor** to catch similar issues in the future.
+
+####  Steps to Create a CPU Usage Monitor:
+
+1. From the **discounts-host dashboard**, locate the **CPU usage (%)** chart.
+2. Click the **three dots** above the chart, then select **Create Monitor** from the dropdown.
+3. In the modal:
+   - Select the metric: `system.cpu.user{host:discounts-host}`.
+   - Click **Create Monitor**.
+
+####  Configure the Monitor:
+
+**Under "Define the metric":**
+- Remove `host:discounts-host` from the **from** field so it applies **everywhere**.
+- Change the aggregator from `avg by` to `max by`.
+- In the **grouping field**, enter or select `host`.
+
+>  This allows the monitor to track CPU usage individually for each host and detect spikes independently.
+
+**Under "Set alert conditions":**
+- Set:
+  - **Warning threshold** = `80`
+  - **Alert threshold** = `90`
+
+**Under "Configure notification & automations":**
+- **Subject**:  
+  `High CPU load on {{host.name}}`
+- **Message**:
+  ```plaintext
+  {{host.name}} is demonstrating an unusually high `system.cpu.user` load. Investigate and resolve accordingly.
+
+- Leave remaining fields unchanged and click Create.
+
+- You'll be redirected to the monitor details page, where you can view its configuration or adjust settings later if needed.
+
+
+
+
+###  5. Mute a Monitor
+
+After configuring a monitor for high CPU usage, the `discounts-host` team starts receiving alerts. Since they are actively working on resolving the issue, they ask you to **mute notifications** for one hour to avoid unnecessary interruptions.
+
+####  Review the Monitor
+
+1. If you're not already on the monitor's detail page, go to **Monitors > Monitors List** and select **High CPU load on {{host.name}}**.
+2. In the upper-right, change the time range to **Past 30 minutes**.
+3. Examine the **timeline chart** near the top — red bars represent CPU usage spikes that crossed the alert threshold.
+4. Review the **host:discounts-host** graph below. Any red shading indicates recent or current CPU usage above the alert threshold.
+
+---
+
+###  Option 1: Mute a Single Monitor
+
+You can mute notifications for this specific monitor only:
+
+1. On the monitor’s detail page, click the **Mute** button (upper-left).
+2. In the modal that appears, click **Specific Groups**.
+3. From the dropdown, choose the **discounts-host**.
+4. Do not click "Create Downtime" for now. Instead, cancel to try another method.
+
+mute_monitor_p1.gif
+
+>  This method only affects this specific monitor.
+
+---
+
+###  Option 2: Mute All Alerts for a Host
+
+To mute **all alerts across all monitors** related to a specific host:
+
+1. Navigate to **Infrastructure > Hosts**.
+2. Hover over `discounts-host` — click the **Mute host alerts** icon (volume symbol).
+3. From the dropdown, select **1h** (one hour).
+4. Return to **Monitors > Monitors List** and re-select **High CPU load** monitor.
+5. Set time range to **Past 30 minutes**.
+6. Review the **host:discounts-host** chart — a **gray shaded region** marks the mute period.
+
+mute_monitor_p2.gif
+
+>  This is a more efficient way to silence alerts when you're already aware of the issue and actively working on it.
+
+
+###  6. Unmute Monitor – Host Recovery
+
+After deploying a fix, the team managing `discounts-host` reports that the high CPU usage issue has been resolved. Now it's time to verify host recovery and **unmute alerts** to resume normal monitoring.
+
+####  Confirm Host Recovery
+
+1. Go to **Infrastructure > Hosts** to access the **Host List**.
+2. Click **discounts-host** to open its detail panel.
+3. In the panel, click **Open in Host Dashboard** (top-right).
+4. Use the time range dropdown (top-right of dashboard) to select **Past 1 hour**.
+
+You should see:
+- **CPU Usage by Process %** and **CPU Usage %** charts showing total usage below 5%.
+- **Load Averages** trending downward — confirming system stability.
+
+---
+
+###  Unmute Alerts for the Host
+
+Now that the issue is resolved and the host is healthy:
+
+1. Return to **Infrastructure > Hosts**.
+2. Hover over **discounts-host** to reveal host action icons.
+3. Click the **volume icon** — it now reads **Unmute host alerts**.
+
+All monitor alerts for `discounts-host` are now active again. If CPU usage spikes in the future, the appropriate team will be notified automatically.
