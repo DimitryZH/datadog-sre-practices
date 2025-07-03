@@ -217,6 +217,8 @@ Now that the issue is resolved and the host is healthy:
 2. Hover over **discounts-host** to reveal host action icons.
 3. Click the **volume icon** — it now reads **Unmute host alerts**.
 
+![unmute_monitor](https://github.com/user-attachments/assets/043431b6-d36b-4b81-b2de-ad63a2ef3fbc)
+
 All monitor alerts for `discounts-host` are now active again. If CPU usage spikes in the future, the appropriate team will be notified automatically.
 
 
@@ -261,34 +263,9 @@ All monitor alerts for `discounts-host` are now active again. If CPU usage spike
 7. To customize the view, click the **Customize** button.  
    - Add the **Rtt** column (Round-Trip Time).
    - Then sort the table in **descending order** by Rtt to highlight the flows with the highest latency.
+     
+![analytics_page_workflow](https://github.com/user-attachments/assets/68371263-b4fb-4cf8-a955-5d016c93dadf)
 
- Insert GIF
-
-
-##  2. Cloud Network Monitoring (CNM)
-
-###  1. Network Analytics and Flows
-
-1. Navigate to **Infrastructure > Cloud Network > Analytics**.
-   This **Analytics** page gives you visibility into the health and performance of network communications between infrastructure components.
-
-2. Datadog tracks **network flows**—communication between two tagged objects (hosts, services, AZs, pods, etc.).
-   - A **client** initiates the connection.
-   - A **server** receives it.
-
-   > Example: `frontend-service` → `backend-service` → `database-service`.  
-   Each step is a separate flow.
-
-3. Each flow includes telemetry:
-   - **Traffic Volume**
-   - **Latency**
-   - **TCP Retransmits**
-   - More
-
-4. Use the **Customize** button above the flows table to reveal additional metrics like **Rtt** (Round Trip Time).  
-   Sort by **Rtt (descending)** to identify the highest latency flows.
-
-Insert GIF
 
 ---
 
@@ -332,8 +309,7 @@ Filtering lets you focus on flows by tag, region, or role.
      ```
      client_instance-type:n2-standard-2 -client_service:agent -server_service:agent
      ```
-
-Insert GIF
+![filtering_network_flows](https://github.com/user-attachments/assets/49896a26-4c24-459a-a7e0-0472b67f5879)
 
 ---
 
@@ -347,7 +323,9 @@ Grouping allows you to understand patterns in how infrastructure communicates.
    - Default: `Auto-grouped traffic`
    - To: `service` or `container_name`
 
-Insert GIF
+![grouping_clients_and_servers ](https://github.com/user-attachments/assets/44669237-6c4a-435c-b8c1-ce7f792bab9d)
+
+---
 
 3. You can group client and server by different tags.
 
@@ -365,6 +343,6 @@ Insert GIF
 - `region`
 - `service`
 
-This flexibility helps uncover traffic patterns and bottlenecks across layers of infrastructure.
+> This flexibility helps uncover traffic patterns and bottlenecks across layers of infrastructure.
 
 
