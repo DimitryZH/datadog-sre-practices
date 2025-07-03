@@ -345,3 +345,330 @@ Grouping allows you to understand patterns in how infrastructure communicates.
 
 > This flexibility helps uncover traffic patterns and bottlenecks across layers of infrastructure.
 
+###  3. Investigate Summary Graphs
+
+While on the **Analytics** page, a new issue is reported:  
+Users are experiencing slow responses and issues applying promo codes in the app.  
+
+The team confirms it’s **not a CPU issue**. We’ll now use **Cloud Network Monitoring** to investigate.
+
+---
+
+####  Step-by-Step Investigation
+
+1. If not already open, go to:  
+   **Infrastructure > Cloud Network > Analytics**
+
+2. Set the **time range** (upper right) to: `Past 1 hour`
+
+3. **Clear** the `Search for` field
+
+4. For both **View clients as** and **View servers as**, select: `service`
+
+---
+
+####  Summary Graphs to Add
+
+Update the page to show the following graphs:
+- **TCP Latency**
+- **TCP Retransmit %**
+- **RTT**
+
+To add or change graphs:
+- Click the graph’s title
+- Select the desired metric from the menu
+
+---
+
+####  Analyze Graphs
+
+#####  TCP Latency
+- High sustained latency in several services
+- Hover lines to inspect client/server pairs
+-  High latency traced to:
+
+- `client: store-discounts`
+- `server: store-discounts`
+
+---
+
+#####  TCP Retransmit %
+- Several flows show sustained high retransmits
+- Hover to inspect percentages
+- Highest value:
+
+- `10.2%, client: store-discounts, server: database`
+
+
+
+---
+
+#####  RTT
+- Consistent high RTT in several flows
+-  Hover reveals:
+
+- `195.6ms, client: store-discounts, server: database`
+
+---
+
+####  Switch to: **TCP Retransmits** (not TCP Retransmit %)
+
+- Click the **TCP Retransmit %** graph title
+- Select: `TCP Retransmits` (total count of retransmitted packets)
+
+This view better illustrates packet loss.
+
+---
+
+#####  TCP Retransmits Bar Graph Analysis
+
+Hover over the largest segments in the bars:
+-  **893**, client: `store-discounts`, server: `store-discounts`
+-  **850**, client: `store-discounts`, server: `database`
+
+---
+
+investigate_summary_graphs.gif
+
+###  Conclusion from Graphs
+
+Two critical insights emerge:
+
+-  **Packet loss**:  
+High TCP retransmits indicate dropped packets from `store-discounts`.
+
+-  **Slow communication**:  
+High **Latency** and **RTT** confirm network slowness, especially when `store-discounts` is the client.
+
+>  Next, we’ll analyze individual **flows** involving the `store-discounts` service more closely.
+
+
+###  5. Analyze Network Flows
+
+After determining that something is wrong in `store-discounts`, you'll now review its associated **network flows** in the Analytics table.
+
+---
+
+####  Customize Network Flow Table
+
+1. Below the summary charts, click the **Customize** button to adjust visible telemetry:
+
+   -  Under **Volume** and **Packets**: toggle **Sent** and **Received** ON  
+   -  Under **TCP**: toggle **Retransmits** and **Latency** ON  
+   -  Toggle OFF all other options
+
+---
+
+####  Sort by Network Performance Metrics
+
+2. Click the **Latency** column (under TCP) to **sort by descending** order
+
+   - Flows with the **highest latency** consistently involve:  
+     ```
+     client: store-discounts
+     ```
+
+3. Next, click the **Retransmits** column to sort **by descending** order
+
+   - Again, the top entries reveal that:
+     - Most retransmits originate from `store-discounts`
+     - Retransmit counts are **significantly higher** than any other source
+
+  analyze_network_flows.gif
+
+---
+
+####  Key Insight
+
+Network telemetry in the **Analytics** page strongly confirms:
+
+-  A major network issue is affecting the **store-discounts** service
+- It manifests through **extremely high TCP latency** and **packet retransmits**
+
+---
+
+> Next, we’ll review how Datadog **correlates CNM and APM data**, helping uncover root causes through end-to-end observability.
+
+### 🔗 6. Flow Details and Correlated Traces
+
+Datadog Cloud Network Monitoring (CNM) **automatically correlates network flows with APM traces**, giving you deep visibility into what happened within services during problematic network events.
+
+In this step, you'll investigate APM traces associated with **high TCP retransmits** from `store-discounts` to `database`.
+
+---
+
+####  Trace Correlation with Network Flows
+
+1. On the **Analytics** page, locate the **network flow with the highest retransmits** between:
+
+`client: store-discounts`
+`server: database`
+
+→ Click the row to open the **Flow Details** side panel.
+
+2. In the panel, click the **Traces** tab (bottom half).  
+This lists all **recent traces** correlated to this network flow.
+
+3. Click any trace → APM opens in a new browser tab with **trace details preloaded**.
+
+4. Close the trace detail side panel to access the full **APM Traces** list.  
+Notice the **query bar is pre-filtered** to show only traces between `store-discounts` and `database`.
+
+5. Sort the **Duration** column in descending order.  
+The longest traces—often over a minute—rise to the top.  
+You’ll likely see frequent slow traces for the endpoint:
+`GET /discount`
+
+
+6. Click one of these long `/discount` traces.  
+In the **Trace View**:
+- Spans show that most time was spent on a **GET request to store-discounts**
+- **No application errors** are reported
+- However, significant time is attributed to the **PostgreSQL query span**
+
+flow_details_and_correlated_traces.gif
+
+---
+
+####  Diagnosing the Issue
+
+Through both **CNM and APM data**, you discover:
+
+-  **Massive packet loss** is affecting the `store-discounts → database` flow
+-  High **TCP retransmits** and **latency**
+-  APM traces show **long durations** but **no code-level errors**
+
+ **Root Cause Hypothesis**:
+> A faulty **network connection** on the `store-discounts` container is leading to dropped packets and performance degradation—despite the app logic behaving normally.
+
+---
+
+ **Action Taken**:
+You contact the team responsible for `store-discounts` and share:
+- High retransmit data from **Cloud Network Monitoring**
+- Long-duration spans from **APM Traces**
+
+They begin troubleshooting immediately.
+
+
+###  7. Network Map
+
+While waiting for the `store-discounts` team to resolve the suspected network issue, take this opportunity to explore another powerful tool in Datadog CNM: the **Network Map**. This map provides a **real-time, interactive visualization** of network traffic and dependencies across your entire infrastructure.
+
+---
+
+####  Visualizing the Network
+
+1. Navigate to: **Infrastructure > Cloud Network > Network Map**
+
+2. This page presents your **networked infrastructure** as a connected graph.  
+Each **node** represents a tagged infrastructure element (e.g., containers, IPs, regions, services), and **edges** represent traffic between nodes.
+
+3. In the **View** dropdown, select:  **container_name**
+
+→ Now each node represents an **individual container**.  
+The same tag-based view options from the Analytics page (like `service`, `host`, `region`) are available here.
+
+---
+
+####  Interact with the Map
+
+- **Hover over a node** (try `"backend"`):
+- A tooltip reveals telemetry (e.g., volume, retransmits, RTT).
+- Network edges (lines) animate to show connections from this node.
+
+- Edges represent the **Metric** selected at the top.  
+By default, it's: `Volume sent`
+
+
+---
+
+####  Interpreting Nodes and Edges
+
+- **Edge thickness** = higher value of the selected metric.
+- **Node size** = cumulative value of metric across the node’s traffic.
+- **Color coding** = defined in the legend (bottom-right).
+
+---
+
+####  Change Metric and View
+
+1. Try changing the **Metric** from `Volume sent` to: `TCP Latency`
+
+→ You'll notice **edges shrink**, as latency values are lower compared to data volume.
+
+2. Now change **View** to: **ip**
+
+→ Nodes now represent **individual IP addresses**, helping you analyze network behavior at the IP level.
+
+3. Test other **View + Metric** combinations:
+- `View: team`
+- `View: region`
+
+network_map.gif
+---
+
+ **Tip**:  
+The Network Map is great for:
+- Spotting **bottlenecks**
+- Visualizing **service dependencies**
+- Understanding **traffic patterns**
+- Identifying **isolated or noisy nodes**
+
+This tool becomes especially valuable when debugging complex networking issues across multi-region or multi-team infrastructures.
+
+###  8. Review the Recovered Network
+
+After collaborating with the `store-discounts` team and confirming a fix has been deployed, it's time to validate that network performance has recovered.
+
+---
+
+####  Revisit CNM Analytics
+
+1. Go to: **Infrastructure > Cloud Network > Analytics**
+
+2. Set both:
+- `View clients as`: `service`
+- `View servers as`: `service`
+
+3. Make sure the following **Summary Graphs** are displayed:
+- **RTT**
+- **TCP Retransmit %**
+- **TCP Latency**
+
+---
+
+####  Confirm Improvements
+
+- **RTT**  
+→ Should show a **significant drop** in round-trip times for flows involving `store-discounts`.
+
+- **TCP Retransmit %**  
+→ Formerly elevated flows should now show **minimal packet loss**, returning to nominal levels.
+
+- **TCP Latency**  
+→ This graph should now reflect **normal and stable latency**, showing that the network is performing well.
+
+---
+
+####  Total Retransmits
+
+1. Click the title of **TCP Retransmit %** and switch to: **TCP Retransmits**
+
+2. Observe that:
+→ The **total number of retransmits has dropped to nearly zero**  
+→ This confirms that the fix resolved the retransmit spike.
+
+
+recovered_network.gif
+---
+
+ **Great work!**  
+Thanks to our investigation and team collaboration:
+- A networking issue in `store-discounts` was diagnosed using CNM and APM tools.
+- We created data-backed hypotheses using latency, RTT, and retransmits.
+- The issue was resolved, and app’s infrastructure is now running healthily.
+
+This demonstrates the power of **Datadog Cloud Network Monitoring** to detect, troubleshoot, and recover from network issues quickly and effectively.
+
+
