@@ -426,9 +426,10 @@ Hover over the largest segments in the bars:
 -  **893**, client: `store-discounts`, server: `store-discounts`
 -  **850**, client: `store-discounts`, server: `database`
 
----
 
-investigate_summary_graphs.gif
+![investigate_summary_graphs](https://github.com/user-attachments/assets/e94ce003-2ff7-4521-b6d8-9d252c779ebc)
+
+---
 
 ###  Conclusion from Graphs
 
@@ -474,7 +475,8 @@ After determining that something is wrong in `store-discounts`, you'll now revie
      - Most retransmits originate from `store-discounts`
      - Retransmit counts are **significantly higher** than any other source
 
-  analyze_network_flows.gif
+
+![analyze_network_flows](https://github.com/user-attachments/assets/4aabef6d-7a09-4f8d-86ba-8eeed0c289ef)
 
 ---
 
@@ -526,7 +528,7 @@ In the **Trace View**:
 - **No application errors** are reported
 - However, significant time is attributed to the **PostgreSQL query span**
 
-flow_details_and_correlated_traces.gif
+![flow_details_and_correlated_traces](https://github.com/user-attachments/assets/e63fde45-5e23-4e61-9c4b-2fa2763f8eb8)
 
 ---
 
@@ -605,7 +607,9 @@ By default, it's: `Volume sent`
 - `View: team`
 - `View: region`
 
-network_map.gif
+  
+![network_map](https://github.com/user-attachments/assets/c598bcf1-15d6-455f-b394-69b66cbf8b7b)
+
 ---
 
  **Tip**:  
@@ -659,8 +663,8 @@ After collaborating with the `store-discounts` team and confirming a fix has bee
 → The **total number of retransmits has dropped to nearly zero**  
 → This confirms that the fix resolved the retransmit spike.
 
+![recovered_network](https://github.com/user-attachments/assets/727dbe77-fc49-4ab4-a13f-922586c6ff20)
 
-recovered_network.gif
 ---
 
  **Great work!**  
