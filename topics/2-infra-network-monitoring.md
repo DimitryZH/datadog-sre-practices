@@ -103,6 +103,8 @@ At the top, you’ll see a **horizontal menu of links** to explore more host dat
 - These CPU spikes generally **correlate with the Load Averages chart**, suggesting user activity is driving load.
 - Other metrics such as **disk I/O, memory usage**, and **network traffic** appear unaffected.
 
+![host_details_dashboard](https://github.com/user-attachments/assets/2a4bf73f-2926-48ea-b987-ec756e0bc402)
+
 >  This host-specific dashboard is a powerful tool for **root cause analysis**, especially when correlating CPU load with user processes.
 
 ###  4. Create a Monitor
@@ -142,6 +144,7 @@ After confirming that high CPU usage on `discounts-host` is due to user space pr
 
 - You'll be redirected to the monitor details page, where you can view its configuration or adjust settings later if needed.
 
+![create_monitor](https://github.com/user-attachments/assets/d874bd15-f45e-44ee-94f6-8ce9b83411b9)
 
 
 
@@ -167,7 +170,7 @@ You can mute notifications for this specific monitor only:
 3. From the dropdown, choose the **discounts-host**.
 4. Do not click "Create Downtime" for now. Instead, cancel to try another method.
 
-mute_monitor_p1.gif
+![mute_monitor_p1](https://github.com/user-attachments/assets/c5c026b5-fe22-475c-9d2d-e4c3d3386399)
 
 >  This method only affects this specific monitor.
 
@@ -184,7 +187,7 @@ To mute **all alerts across all monitors** related to a specific host:
 5. Set time range to **Past 30 minutes**.
 6. Review the **host:discounts-host** chart — a **gray shaded region** marks the mute period.
 
-mute_monitor_p2.gif
+![mute_monitor_p2](https://github.com/user-attachments/assets/da91c154-02ad-4471-9d29-60e567fe9cd5)
 
 >  This is a more efficient way to silence alerts when you're already aware of the issue and actively working on it.
 
