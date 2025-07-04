@@ -36,9 +36,9 @@ Each service is instrumented with Datadog Agents to stream telemetry for analysi
 | 1 | **APM Metrics & Traces** | Explore trace visualization and RED metrics |
 | &nbsp;&nbsp;&nbsp;1.1 | [Application Performance Monitoring Overview](topics/1-apm-metrics-traces/1.1-apm-overview.md) | Concepts, tags, spans, and trace ingestion |
 | &nbsp;&nbsp;&nbsp;1.2 | [Analyzing Metrics and Traces](topics/1-apm-metrics-traces/1.2-analyzing-metrics-and-traces.md) | Hands-on exploration with RED metrics, flame graphs, and outlier analysis |
-| 2 | [Infrastructure & Cloud Network Monitoring](topics/2-infra-network-monitoring.md) | Monitoring servers, containers, and network flows |
-| 3 | [Service Level Objectives (SLOs)](topics/3-slos.md) | Define and track service reliability metrics |
-| 4 | [Incident Management](topics/4-incident-management.md) | Runbooks, alert triage, root cause analysis, postmortems |
+| 2 | [Infrastructure & Cloud Network Monitoring](topics/2-infra-network-monitoring/2-infra-network-monitoring.md) | Monitoring servers, containers, and network flows |
+| 3 | [Service Level Objectives (SLOs)](topics/3-slos/3-slos.md) | Define and track service reliability metrics |
+| 4 | [Incident Management](topics/4-incident-management/4-incident-management.md) | Runbooks, alert triage, root cause analysis, postmortems |
 
 
 
