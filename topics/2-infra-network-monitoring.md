@@ -1,6 +1,6 @@
 #  Infrastructure & Cloud Network Monitoring
 
-This guide walks through two essential capabilities in Datadog:
+This hands-on work showcases two essential capabilities in Datadog:
 
 - **Infrastructure Monitoring** — for tracking system-level metrics, host health, and telemetry across environments.
 - **Cloud Network Monitoring (CNM)** — for visualizing and monitoring real-time communication between cloud-based services and hosts.
