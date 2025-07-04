@@ -676,3 +676,15 @@ Thanks to our investigation and team collaboration:
 This demonstrates the power of **Datadog Cloud Network Monitoring** to detect, troubleshoot, and recover from network issues quickly and effectively.
 
 
+##  Summary
+
+In this part, we explored Datadog's Infrastructure and Cloud Network Monitoring (CNM) features to assess and troubleshoot system and network-level performance issues.
+
+- We began by using the **Host List** and **Host Map** to investigate individual hosts like `discounts-host`, filtering by tags, visualizing metrics such as CPU usage, and reviewing host dashboards.
+- After identifying abnormal CPU usage on a specific host, we created a **Datadog monitor** to alert the team if the issue recurred. We also tested how to **mute and unmute** monitors during scheduled downtime or maintenance.
+- Next, we explored **Cloud Network Monitoring (CNM)** by analyzing network **flows**, **latency**, **TCP retransmits**, and **RTT** between services and infrastructure layers.
+- Using CNM’s **Analytics and Network Map**, we isolated an issue within the `store-discounts` service: extremely high retransmit rates and latency in connections to the database.
+- These network issues were further confirmed through **correlated APM traces**, showing slow request durations without application-level errors, confirming the degradation was network-related.
+- After collaboration with the `store-discounts` team and deploying a network fix, we validated service recovery by observing improved metrics across RTT, latency, and retransmits.
+
+ **Based on this work, an [Incident Report](incident-report-network.md) was created** to document the root cause, resolution, and recommended actions following the network degradation issue in the `store-discounts` service.
