@@ -1,4 +1,6 @@
-## 🔍 1. Investigate App Performance
+# Service Level Objectives (SLOs)
+
+##  1. Investigate App Performance
 
 ### Scenario
 
@@ -64,5 +66,119 @@ We collect the relevant metrics to define our future SLIs and SLOs:
  **Next Step**: We review this information with our team to ensure alignment on metrics and expectations, and prepare to define SLOs that reflect our performance goals.
 
   analyze_app_performance.gif
+
+
+##  2. Creating SLOs
+
+In the previous section, we worked with the app service to identify metrics that define our Service Level Objectives (SLOs). We successfully selected three key metrics to track the error rate and latency of our web application:
+
+- `trace.web.request`
+- `trace.web.request.hits`
+- `trace.web.request.errors`
+
+In this section, we'll create **two SLOs** to track the performance of the `store-frontend` service in Storedog. We'll start by building a latency monitor, then use it to create a monitor-based SLO, followed by a metric-based SLO for error rate.
+
+---
+
+###  2.1 Build a Latency Monitor
+
+To track latency for our app, we’ll first create a monitor. This will serve as the **Service Level Indicator (SLI)** for our first SLO.
+
+1. Open the **Quick Nav** menu, type `New Monitor`, and press Enter.
+2. In the top-left corner, select **Metric**.
+3. In the bottom-right corner, choose **Configure Metric Monitor**.
+4. Scroll to **Define the Metric** and enter: `trace.web.request`
+5. In the **from** field, enter: `service:store-frontend`
+6. Under **Set alert conditions**, set:
+- **Alert threshold**: 3
+- **Warning threshold**: 2
+7. Under **Configure notifications & automations**, set the title to: `store-frontend latency alert`
+8. Add a description: `store-frontend latency is high. Customers may be experiencing slow responses.`
+
+9. Click **Create** in the bottom-right corner.
+
+ store-frontend_alert_monitor.gif
+
+ > We've now created a monitor to track latency for the `store-frontend` service. Involving the team in selecting thresholds is essential, as every app and environment is different.
+
+---
+
+###  2.2 Create a Monitor-Based SLO
+
+With our latency monitor in place, we'll now create a **monitor-based SLO**. This allows us to define an uptime target based on the monitor status.
+
+1. Open the **Quick Nav**, type `New SLO`, and press Enter.
+2. Under **Define our SLO measurement**, select **By Monitor Uptime**.
+3. Choose our previously created monitor: `store-frontend latency alert`
+4. Under **Set our target & time window**, select:
+- **Target**: 90%
+- **Time window**: 7 Days
+5. Add a name: `store-frontend latency`
+6. Add a description: `Tracks store-frontend latency to ensure fast response times and a smooth user experience.`
+7. Under **Services**, select: `store-frontend`
+8. Click **Create**.
+
+ configure_monitor_based_slo.gif
+
+ We've successfully created our first SLO for latency. Collaborating with the team helped us agree on a 90% target as a good starting point.
+
+---
+
+###  2.3 Create a Metric-Based SLO (Error Rate)
+
+Next, we’ll create a **metric-based SLO** to track error rates for `store-frontend`.
+
+1. On the main **SLO** page, click **New SLO** in the upper-right.
+2. Under **Define your SLO measurement**, select **By Count**.
+
+####  Good Events (Successful Requests)
+- **Metric**: `trace.web.request.hits`
+- **from**: `service:store-frontend`
+
+Click **Add Query**.
+
+####  Bad Events (Failed Requests)
+- **Metric**: `trace.web.request.errors`
+- **from**: `service:store-frontend`
+
+3. Below the queries, set the **Formula** to: `a-b`
+
+####  Total Events (Baseline)
+- **Metric**: `trace.web.request.hits`
+- **from**: `service:store-frontend`
+
+4. Under **Set your target & time window**:
+- **Target**: 95%
+- **Time window**: 7 Days
+
+5. Name the SLO: `store-frontend error rate`
+
+6. Add a description: `Tracks error rate for store-frontend to ensure reliable user experience and reduce silent failures.`
+
+7. Under **Services**, select `store-frontend`.
+8. Click **Create**.
+
+configure_metric_based_slo.gif
+> We've now created our second SLO, focused on error rates.
+
+---
+
+> In this section, we created two SLOs to track the performance of the `store-frontend` service in Storedog:
+
+- A **monitor-based SLO** to track **latency**
+- A **metric-based SLO** to track **error rate**
+
+We collaborated with our team to define meaningful thresholds and targets, ensuring these SLOs reflect realistic service goals. In the next part, we’ll refine our SLOs and create **burn rate monitors** to proactively detect issues.
+
+
+
+ 
+
+
+
+
+
+
+
 
 
