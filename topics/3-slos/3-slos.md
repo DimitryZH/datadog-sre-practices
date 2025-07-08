@@ -224,6 +224,45 @@ This update will help drive conversations, prioritize engineering efforts, and i
 > We've successfully **adjusted both latency and error rate SLOs** to more accurately reflect application performance and user expectations. In the next section, we’ll create **monitors for SLO burn rate** to proactively detect when service degradation might breach our targets.
 
 
+##  4. Monitor an Error Budget
+
+Creating SLOs is only the beginning — the real power comes from **monitoring** how much of your **error budget** is being consumed. In this step, we'll create a **monitor** that tracks the error budget for the `store-frontend` **latency SLO**. This enables your team to react quickly if too much of the budget is being used too soon.
+
+>  **What is an error budget?**  
+> An error budget represents the **allowable margin for failure** before breaching an SLO. 
+
+---
+
+###  Steps to Monitor the Error Budget
+
+1. From the main **SLOs** page, select **`store-frontend latency`**.
+2. In the top-right corner, click the **gear icon** and choose **Set up alerts**.
+3. Ensure **store-frontend latency** is the selected SLO.
+4. Under **Set alert conditions**, make sure **Error Budget** is selected.
+5. Set the thresholds:
+   - **Alert value** → `100`
+   - **Warn value** → `75`
+6. Add a **monitor name**: `store-frontend latency SLO alert`
+7. Provide a **short description**, such as:`The store-frontend latency SLO is burning its error budget too quickly. Please investigate to avoid breaching the SLO.`
+8. Click **Create** to finalize the monitor.
+
+monitor_latency_slo_alert.gif
+
+---
+
+> Result.
+
+Our team is now equipped with a **monitor-based alert** that will trigger when the error budget for latency is approaching exhaustion. This kind of proactive monitoring allows teams to:
+
+- Catch performance degradation **before** it impacts users.
+- Adjust release velocity based on SLO health.
+- Collaborate cross-functionally to resolve issues before breaching targets.
+
+ **Reminder**: Always calibrate alert/warning thresholds in collaboration with your engineering and reliability teams. Different environments and SLAs require different tolerances.
+
+---
+
+
 
  
 
