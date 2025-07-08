@@ -50,6 +50,9 @@ We collect the relevant metrics to define our future SLIs and SLOs:
    - We record the latency metric shown here (typically `trace.web.request` duration or latency distribution)
 
  These metrics will be essential when we define Service Level Indicators (SLIs) for the SLOs in the next steps.
+---
+
+![analyze_app performance](https://github.com/user-attachments/assets/e258763a-c62f-4ce7-8faf-d3e4526651ee)
 
 ---
 
@@ -65,7 +68,6 @@ We collect the relevant metrics to define our future SLIs and SLOs:
 
  **Next Step**: We review this information with our team to ensure alignment on metrics and expectations, and prepare to define SLOs that reflect our performance goals.
 
-  analyze_app_performance.gif
 
 
 ##  2. Creating SLOs
@@ -97,11 +99,11 @@ To track latency for our app, we’ll first create a monitor. This will serve as
 
 9. Click **Create** in the bottom-right corner.
 
- store-frontend_alert_monitor.gif
+---
+
+![store-frontend_alert_monitor](https://github.com/user-attachments/assets/193dcf6b-14f0-4467-9cf4-cbf6a3afcbd1)
 
  > We've now created a monitor to track latency for the `store-frontend` service. Involving the team in selecting thresholds is essential, as every app and environment is different.
-
----
 
 ###  2.2 Create a Monitor-Based SLO
 
@@ -118,9 +120,10 @@ With our latency monitor in place, we'll now create a **monitor-based SLO**. Thi
 7. Under **Services**, select: `store-frontend`
 8. Click **Create**.
 
- configure_monitor_based_slo.gif
+---
+![configure_monitor_based_slo](https://github.com/user-attachments/assets/b5b51a49-d774-4221-8cfb-434d916a2dc7)
 
- We've successfully created our first SLO for latency. Collaborating with the team helped us agree on a 90% target as a good starting point.
+> We've successfully created our first SLO for latency. Collaborating with the team helped us agree on a 90% target as a good starting point.
 
 ---
 
@@ -158,12 +161,13 @@ Click **Add Query**.
 7. Under **Services**, select `store-frontend`.
 8. Click **Create**.
 
-configure_metric_based_slo.gif
-> We've now created our second SLO, focused on error rates.
+---
+![configure_metric_based_slo](https://github.com/user-attachments/assets/a94f161d-2dff-4907-a97a-fc3da05d0796)
 
 ---
+> We've now created our second SLO, focused on error rates.
 
-> In this section, we created two SLOs to track the performance of the `store-frontend` service in Storedog:
+> In this part, we created two SLOs to track the performance of the `store-frontend` service in Storedog:
 
 - A **monitor-based SLO** to track **latency**
 - A **metric-based SLO** to track **error rate**
@@ -206,14 +210,14 @@ The original **95% target** for error rate is also too relaxed. After team discu
 2. Click the **gear icon** in the top-right corner and choose **Edit SLO**.
 3. Under **Set your target & time window**, update the target: `From: 95% To: 99.9%`
 4. Click **Save**.
-
- adjusted_slos_list.gif
+   
+---
+![adjusted_slos_list](https://github.com/user-attachments/assets/06a60cab-992d-4c12-a87b-382c94e185ac)
 
 ---
-
 ###  Why Stricter SLOs Matter
 
-After updating your SLOs, you may notice the **error rate SLO turns red** (i.e. no longer within the target). While that might seem like a negative change, it's actually a **positive insight**:
+After updating our SLOs, we've noticed the **error rate SLO turns red** (i.e. no longer within the target). While that might seem like a negative change, it's actually a **positive insight**:
 
 > A lower target like 95% could **hide reliability issues**, whereas raising the bar to 99.9% **uncovers areas that need improvement**.
 
@@ -246,12 +250,11 @@ Creating SLOs is only the beginning — the real power comes from **monitoring**
 7. Provide a **short description**, such as:`The store-frontend latency SLO is burning its error budget too quickly. Please investigate to avoid breaching the SLO.`
 8. Click **Create** to finalize the monitor.
 
-monitor_latency_slo_alert.gif
-
+---
+![monitor_latency_slo_alert](https://github.com/user-attachments/assets/d780d677-0fd2-4baa-9537-55663f6ce569)
 ---
 
 > Result.
-
 Our team is now equipped with a **monitor-based alert** that will trigger when the error budget for latency is approaching exhaustion. This kind of proactive monitoring allows teams to:
 
 - Catch performance degradation **before** it impacts users.
@@ -272,8 +275,6 @@ Monitoring the **burn rate** enables our team to:
 - Understand the **velocity** of failure, not just its presence.
 
 ---
-
-
 We’ll now create a **burn rate alert** on our existing SLO for the `store-frontend` error rate.
 
 #### Steps:
@@ -298,24 +299,23 @@ To act before breaching this budget, we set a burn rate alert threshold for when
 `burn rate = (168 × 0.1) ÷ 1 × 100% = 16.8`
 
 6. Set thresholds:
-
 - **Alert value** → `16.8`
 - **Warn value** → `8.4`
 
 7. Under **Configure notifications & automations**, add:
-
 - **Name**: ` store-frontend error rate SLO alert `
 
 - **Description**:  `The burn rate for store-frontend's error rate SLO is too high. Investigate this service immediately to avoid breaching the SLO target.`
 
-
-7. Click **Create** to activate the burn rate monitor.
-
-create_burn_rate_monitor.gif
+8. Click **Create** to activate the burn rate monitor.
 
 ---
 
->  Result
+![monitor_error_rate_slo_alert](https://github.com/user-attachments/assets/25190546-811c-45e6-bbdb-d2e1ceac8279)
+
+---
+
+>  Result.
 
 We've now implemented a **burn rate alert** that tracks how quickly the error budget is being consumed.
 
