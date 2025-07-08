@@ -324,6 +324,19 @@ If the `store-frontend` service continues to experience elevated error rates, th
 >  **Takeaway**: SLO burn rate monitoring helps bridge the gap between visibility and actionability. It ensures your team isn’t just reacting to failures — you’re staying ahead of them.
 
 ---
+##  Summary
+
+In this work, we designed and implemented a complete SLO monitoring system for the `store-frontend` service. This work led to the following key outcomes:
+
+-  We created and tuned **monitor-based and metric-based SLOs** to track latency and error rate for a high-traffic service impacting real users.
+-  We built a **custom latency monitor** and defined clear alert and warning thresholds aligned with application behavior.
+-  We configured an **SLO target of 99% for latency** and **99.9% for error rate**, reflecting stricter expectations after initial review.
+-  We calculated and implemented a **burn rate alert** using a real formula to track error budget consumption in near real-time, enabling proactive response before SLO violations occur.
+-  We identified relevant SLIs (`trace.web.request.hits`, `trace.web.request.errors`, `trace.web.request`) that meaningfully represent user-perceived performance.
+-  We validated our setup by adjusting targets to better reflect reality and exposing gaps between internal metrics and external user experience.
+-  With monitors and burn rate alerts in place, we enabled the team to detect and respond faster to performance regressions, well before they turn into customer complaints.
+
+
 
 
 
