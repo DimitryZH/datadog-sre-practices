@@ -171,6 +171,59 @@ configure_metric_based_slo.gif
 We collaborated with our team to define meaningful thresholds and targets, ensuring these SLOs reflect realistic service goals. In the next part, we’ll refine our SLOs and create **burn rate monitors** to proactively detect issues.
 
 
+##  3. Adjust SLO Goals
+
+Now that our SLOs are set up, the next step is to ensure they **accurately reflect user experience** and **performance expectations**. While our existing latency and error rate SLOs appear to be performing well in Datadog, customer complaints are still coming in. This suggests that our SLO targets might be **too lenient** and are not capturing real-world issues.
+
+To address this, we’ll revise both SLOs to reflect **stricter, more realistic targets** that align with the **business impact** and user expectations.
+
+---
+
+###  3.1 Update the Latency SLO
+
+Your team agrees that the current target of **90%** is too low, especially given the critical importance of the `store-frontend` service.
+
+#### Steps:
+
+1. Open the **Quick Nav** menu, type `SLOs`, and press Enter.  
+   *(Be sure to select `SLOs` and **not** `New SLO`.)*
+2. Select the **`store-frontend latency`** SLO.
+3. Click the **gear icon** in the top-right corner and choose **Edit SLO**.
+4. Under **Set your target & time window**, change:  `From: 90% To: 99%`
+5. Click **Save**.
+
+ This update aligns your latency goal with the critical nature of frontend performance and gives your team better visibility into subpar user experience.
+
+---
+
+###  3.2 Update the Error Rate SLO
+
+The original **95% target** for error rate is also too relaxed. After team discussions, you’ve decided to raise the target to **99.9%** to reflect your app’s reliability standards.
+
+#### Steps:
+
+1. From the main **SLO** page, select the **`store-frontend error rate`** SLO.
+2. Click the **gear icon** in the top-right corner and choose **Edit SLO**.
+3. Under **Set your target & time window**, update the target: `From: 95% To: 99.9%`
+4. Click **Save**.
+
+ adjusted_slos_list.gif
+
+---
+
+###  Why Stricter SLOs Matter
+
+After updating your SLOs, you may notice the **error rate SLO turns red** (i.e. no longer within the target). While that might seem like a negative change, it's actually a **positive insight**:
+
+> A lower target like 95% could **hide reliability issues**, whereas raising the bar to 99.9% **uncovers areas that need improvement**.
+
+This update will help drive conversations, prioritize engineering efforts, and improve end-user experience in meaningful ways.
+
+---
+
+> We've successfully **adjusted both latency and error rate SLOs** to more accurately reflect application performance and user expectations. In the next section, we’ll create **monitors for SLO burn rate** to proactively detect when service degradation might breach our targets.
+
+
 
  
 
