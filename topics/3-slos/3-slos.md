@@ -262,6 +262,71 @@ Our team is now equipped with a **monitor-based alert** that will trigger when t
 
 ---
 
+##  5. Monitor the Burn Rate
+
+While monitoring an SLO’s **error budget** is essential, it doesn’t always give a complete picture of how quickly things are going wrong. You may only catch an issue **after** breaching a threshold. To act earlier, we need to track how fast we’re consuming our error budget — this is known as the **burn rate**.
+
+Monitoring the **burn rate** enables our team to:
+- Identify **escalating issues** before an SLO is violated.
+- React **proactively** to performance degradation.
+- Understand the **velocity** of failure, not just its presence.
+
+---
+
+
+We’ll now create a **burn rate alert** on our existing SLO for the `store-frontend` error rate.
+
+#### Steps:
+
+1. Open the **Quick Nav** menu, type `SLOs`, and press **Enter**.
+2. Select the SLO: **`store-frontend error rate`**.
+3. Click the **gear icon** in the top-right and choose **Set up alerts**.
+4. Ensure `store-frontend error rate` is selected.
+5. Under **Set alert conditions**, select **Burn Rate**.
+
+---
+### Burn Rate Calculation
+With an SLO target of **99.9%**, our error budget is **100% - 99.9% = 0.1%** 
+
+
+For a **7-day SLO window** (168 hours), this means: **Error budget time = 168 hrs × 0.001 = 0.168 hrs = 10.08 minutes**
+
+To act before breaching this budget, we set a burn rate alert threshold for when **10% of the budget** is used in a **1-hour window**.
+
+**Burn Rate Formula:**
+`burn rate = (SLO duration in hours × error budget used %) ÷ long window (in hours) × 100%`  
+`burn rate = (168 × 0.1) ÷ 1 × 100% = 16.8`
+
+6. Set thresholds:
+
+- **Alert value** → `16.8`
+- **Warn value** → `8.4`
+
+7. Under **Configure notifications & automations**, add:
+
+- **Name**: ` store-frontend error rate SLO alert `
+
+- **Description**:  `The burn rate for store-frontend's error rate SLO is too high. Investigate this service immediately to avoid breaching the SLO target.`
+
+
+7. Click **Create** to activate the burn rate monitor.
+
+create_burn_rate_monitor.gif
+
+---
+
+>  Result
+
+We've now implemented a **burn rate alert** that tracks how quickly the error budget is being consumed.
+
+If the `store-frontend` service continues to experience elevated error rates, this alert will fire **before** the SLO is violated — giving your team time to investigate and correct the issue.
+
+>  **Takeaway**: SLO burn rate monitoring helps bridge the gap between visibility and actionability. It ensures your team isn’t just reacting to failures — you’re staying ahead of them.
+
+---
+
+
+
 
 
  
