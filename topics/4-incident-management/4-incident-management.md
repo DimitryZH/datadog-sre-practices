@@ -244,5 +244,4 @@ Based on this incident, we can consider the following **follow-up actions**:
 
 
 Our generated postmortem notebook:  
-**`postmortem-ir-1-latency-issue-on-homepage.md`**
-
+[postmortem-ir-1-latency-issue-on-homepage.md](postmortem-ir-1-latency-issue-on-homepage.md)
