@@ -143,7 +143,7 @@ complete_task_add_new_one.gif
 
 ###  Step 5: Fix and Close the Investigation
 
-The issue in the `advertisements-service` code was identified and resolved (outside Datadog). Now reflect that in the incident timeline:
+The issues in the `advertisements-service` and `store-frontend`code were identified and resolved (outside Datadog). Now reflect that in the incident timeline:
 
 1. Back in the **Remediation** tab, check off the task **Investigate ad service code** as complete.
 
@@ -152,4 +152,37 @@ The issue in the `advertisements-service` code was identified and resolved (outs
 > After the fix was deployed, we verified that the homepage now loads significantly faster.  
 The latency alert has cleared, and user experience has returned to normal.
 
----
+
+
+## 3. Resolving the Incident
+
+We now have the necessary context to state the **root cause** and officially resolve the incident.
+
+
+
+### Step 1: Document the Root Cause
+
+1. Navigate back to your **Incident Overview** page in Datadog.
+2. Scroll to the **"Why it happened"** section.
+3. Add the following root cause explanation: `Debug statements left in the ad service code and an uncaught N+1 query. `
+4. Click the  **check button** to save your update.
+
+
+###  Step 2: Confirm Monitor Recovery
+
+1. In Datadog, go to **Monitors > Monitor List**, and locate the monitor:  
+**store-frontend average latency monitor**
+2. Wait for the monitor to turn **green (OK status)**, indicating that latency has returned to acceptable levels.
+- You may need to **refresh the page** after a few minutes.
+
+###  Step 3: Resolve the Incident
+
+1. Once the monitor remains in **OK status**, return to the **Incident page**.
+2. Change the **incident status** from `ACTIVE` to `RESOLVED`.
+
+resolving_incident.gif
+
+
+> The incident is now officially closed.
+
+
