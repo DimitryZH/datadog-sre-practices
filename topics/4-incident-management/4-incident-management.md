@@ -1,4 +1,4 @@
-# Incident Management: Investigating and Resolving Latency Issues
+# Incident response workflow in Datadog: detect, investigate, and resolve a latency issue
 
 ##  Overview
 
@@ -31,3 +31,125 @@ In this work, we used **APM and Datadog Incident Management tools** to:
 ---
 
 
+## 1. Declaring and Classifying the Incident
+
+In this section, we responded to an alert, declared an incident, and began adding context to better understand the impact on users and the business.
+
+---
+
+### Step 1: Responding to an Alert
+
+We started by reviewing the alert that notified us about the performance degradation:
+
+1. Opened the monitor **`store-frontend average latency monitor`**  
+   - This monitor is currently in the **ALERT** state.
+   - It checks whether the **average latency over the past 1 minute** exceeds **3 seconds**.
+
+2. Upon inspection:
+   - The monitor **query** confirms it's tracking average latency above the threshold.
+   - The **message** warns that the store-frontend is experiencing **high latency**, which aligns with the issues observed by users loading the app.
+
+---
+
+###  Step 2: Declaring an Incident
+
+In Datadog, incidents can be declared from various locations:
+- Clipboard (top navigation)
+- Sidebar navigation
+- Directly from monitors
+- From a dashboard widget
+
+We declared this incident **from the monitor itself**:
+
+1. Clicked **Actions** in the top-right corner of the alert.
+2. Selected **Declare Incident**.
+3. In the **Declare Incident** modal, we filled in:
+   - **Title**: `Latency Issue on Homepage`
+   - **Severity**: *Left as Unknown* for now
+   - **Incident Commander**: Our own username (or relevant responder)
+   - **Attributes**: The tag `service:store-frontend` was auto-suggested from the monitor’s scope
+
+4. Clicked **Declare Incident** to open the Incident Overview.
+
+---
+
+###  Step 3: Adding Context
+
+From the **Incident Overview** page (also accessible via **Service Mgmt > Incidents**), we added more meaningful details:
+
+1. Under **What happened**, set:
+   - **Detection Method**: `Monitor`
+   - **Impact** then **+ Add**:  
+     `Customers are experiencing long loading times for our site.`
+
+> _Note:_ We can manually adjust the **Impact Start Time** if your investigation shows the problem started earlier. For this case, we kept the default.
+
+2. Clicked **Save**.
+
+3. Upon saving, we were prompted to **set the severity level**:
+   - Set **Severity** to `SEV-2 (Major issue affecting customers and users)`
+
+declaring_classifying_incident.gif
+
+---
+
+> **Tip:** We can customize severity levels for your organization in **Incident Management > Settings**.
+
+
+> At this point, we have **successfully declared the incident** and added contextual details to begin deeper investigation and resolution.
+
+Next, we'll dive into the root cause and trace the issue through APM.
+
+## 2. Investigating the Incident
+Now that the incident has been declared and acknowledged, the next step is to investigate the root cause and begin the remediation process. Using Datadog's APM and Incident Management features, we traced the issue to a specific backend service impacting the app's performance.
+
+###  Step 1: Add an Initial Follow-up Task
+
+1. On the **Incident Overview** page, click the **Remediation** tab.
+2. Under **Incident Follow-Ups**, type the task: `Look at app traces` 
+3. Click **Create Task**.
+4. Click **Assign To** and assign it to a team member.
+
+###  Step 2: Review Related Traces
+
+1. Navigate to **Monitors > Monitor List** and click on the `store-frontend average latency monitor`.
+2. Under **Monitor behavior**, set the time range to **Past 30 minutes**.
+3. In the graph panel, under **Visualize as**, select **Source Data**.
+4. Click on the graph to open the context menu and select **View Related Traces**.
+5. In the Traces list view, change the time range to **Past 15 Minutes**.
+6. Open a trace and examine the **% Exec Time** column.
+   - We noticed that the **advertisements-service** is responsible for a significant portion of the execution time.
+
+investigating_incident.gif
+
+### Step 3: Add the Trace to the Incident
+
+1. Click **Open Full Page** in the upper-right corner of the trace panel.
+2. Press **Cmd/Ctrl + Shift + K** to open the **Datadog Clipboard**.
+3. Click **Add current page**, then **Export item to…**
+4. From the drop-down, select your incident and click **Export**.
+
+export-trace-to-incident.png
+
+###  Step 4: Complete the Task and Add a New One
+
+1. Return to **Service Mgmt > Incidents List** and select the incident.
+2. Under the **Remediation** tab, check off the task **Look at app traces**.
+3. Add a new task: `Investigate ad service code `
+4. Under the **Overview** tab, update the **Services** attribute to also include `advertisements-service` and `store-frontend`.
+
+
+complete_task_add_new_one.gif
+
+###  Step 5: Fix and Close the Investigation
+
+The issue in the `advertisements-service` code was identified and resolved (outside Datadog). Now reflect that in the incident timeline:
+
+1. Back in the **Remediation** tab, check off the task **Investigate ad service code** as complete.
+
+### Result
+
+> After the fix was deployed, we verified that the homepage now loads significantly faster.  
+The latency alert has cleared, and user experience has returned to normal.
+
+---
