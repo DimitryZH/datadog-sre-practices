@@ -186,3 +186,53 @@ resolving_incident.gif
 > The incident is now officially closed.
 
 
+## 4. Generating a Postmortem
+
+After resolving an incident, it’s essential to reflect on what happened and ensure the organization can learn from the event. Datadog simplifies this process by automatically generating a postmortem document.
+
+---
+
+### 📝 Step 1: Generate the Postmortem Notebook
+
+1. Once your incident is marked as **RESOLVED**, a **Generate Postmortem** button appears at the top of the incident page.
+2. Click **Generate Postmortem** to open the **Generate a Notebook Postmortem** modal.
+3. Use the **Datadog Template** option. This automatically populates a Notebook with:
+   - A complete **incident timeline**
+   - **Links to dashboards, monitors, traces**, and other Datadog resources referenced during the incident
+4. Click **Generate**.
+
+generating_postmortem.gif.
+---
+
+###  Step 2: Review and Enrich the Postmortem
+
+The generated **Postmortem Notebook** contains timestamped entries and linked resources.
+
+- Review the notebook.
+- Add any missing context, technical insights, or next steps that Datadog didn’t capture automatically.
+
+---
+
+###  Results 
+
+Based on this incident, we can consider the following **follow-up actions**:
+
+-  Formalize a process for **managing debug statements**, e.g., using tags like `// DEBUG-START` and `// DEBUG-END`.
+-  Add a **latency regression test** for the `advertisements-service` in CI/CD.
+-  Review the **effectiveness of the monitor**:
+  - Was the detection fast enough?
+  - Are the thresholds and alerting conditions ideal?
+  - Consider refining or adding **new monitors**.
+
+---
+
+###  Accessing Postmortems Later
+
+- Navigate to: **Dashboards > Notebooks > Notebook List**
+- Filter by **Notebook Type → Postmortem** to find past incident reviews.
+- Each postmortem can be **downloaded** as PDF or Markdown.
+
+
+Our generated postmortem notebook:  
+**`postmortem-ir-1-latency-issue-on-homepage.md`**
+
