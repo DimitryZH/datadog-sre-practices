@@ -89,7 +89,8 @@ From the **Incident Overview** page (also accessible via **Service Mgmt > Incide
 3. Upon saving, we were prompted to **set the severity level**:
    - Set **Severity** to `SEV-2 (Major issue affecting customers and users)`
 
-declaring_classifying_incident.gif
+
+![declaring_classifying_incident](https://github.com/user-attachments/assets/8d07cd28-9233-43bd-b3e3-995f11c4b760)
 
 ---
 
@@ -120,7 +121,10 @@ Now that the incident has been declared and acknowledged, the next step is to in
 6. Open a trace and examine the **% Exec Time** column.
    - We noticed that the **advertisements-service** is responsible for a significant portion of the execution time.
 
-investigating_incident.gif
+
+![Investigating_incident](https://github.com/user-attachments/assets/9fb8f06a-8e09-4d6a-aa67-e6b73ebdd636)
+
+---
 
 ### Step 3: Add the Trace to the Incident
 
@@ -128,8 +132,10 @@ investigating_incident.gif
 2. Press **Cmd/Ctrl + Shift + K** to open the **Datadog Clipboard**.
 3. Click **Add current page**, then **Export item to…**
 4. From the drop-down, select your incident and click **Export**.
+   
+<img width="1764" height="913" alt="export-trace-to-incident" src="https://github.com/user-attachments/assets/d5a2f7cf-3dfd-475c-8eb3-7754dc0f02a3" />
 
-export-trace-to-incident.png
+---
 
 ###  Step 4: Complete the Task and Add a New One
 
@@ -138,8 +144,9 @@ export-trace-to-incident.png
 3. Add a new task: `Investigate ad service code `
 4. Under the **Overview** tab, update the **Services** attribute to also include `advertisements-service` and `store-frontend`.
 
+![complete_task_add_new_one](https://github.com/user-attachments/assets/568dae5b-f6d7-4182-a778-5ff91a57d8e9)
 
-complete_task_add_new_one.gif
+---
 
 ###  Step 5: Fix and Close the Investigation
 
@@ -180,8 +187,10 @@ We now have the necessary context to state the **root cause** and officially res
 1. Once the monitor remains in **OK status**, return to the **Incident page**.
 2. Change the **incident status** from `ACTIVE` to `RESOLVED`.
 
-resolving_incident.gif
 
+![resolving_incident](https://github.com/user-attachments/assets/5222f8bf-5f4c-40b0-a6f7-3918b66362d2)
+
+---
 
 > The incident is now officially closed.
 
@@ -192,7 +201,7 @@ After resolving an incident, it’s essential to reflect on what happened and en
 
 ---
 
-### 📝 Step 1: Generate the Postmortem Notebook
+###  Step 1: Generate the Postmortem Notebook
 
 1. Once your incident is marked as **RESOLVED**, a **Generate Postmortem** button appears at the top of the incident page.
 2. Click **Generate Postmortem** to open the **Generate a Notebook Postmortem** modal.
@@ -201,7 +210,8 @@ After resolving an incident, it’s essential to reflect on what happened and en
    - **Links to dashboards, monitors, traces**, and other Datadog resources referenced during the incident
 4. Click **Generate**.
 
-generating_postmortem.gif.
+![generate_postmortem](https://github.com/user-attachments/assets/13cdb7e0-3927-4e25-b56c-792f38687f77)
+
 ---
 
 ###  Step 2: Review and Enrich the Postmortem
