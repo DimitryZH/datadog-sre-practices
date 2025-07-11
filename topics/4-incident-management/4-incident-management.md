@@ -10,11 +10,14 @@ We were first alerted by a Datadog monitor configured to track **average request
   APM-based monitor targeting `store-frontend` latency  
   **Threshold:** Average latency > 3s (past 1 minute) 
 
-store-frontend-average-latency-monitor.png
 
+<img width="1318" height="863" alt="store-frontend-average-latency-monitor" src="https://github.com/user-attachments/assets/e21f1dd8-903a-4709-bb68-3c62de5c9dea" />
+
+---
 After receiving the alert, we opened the application in a browser to validate the problem and experienced the same delay. The app appeared stuck on the **loading screen**, failing to render the homepage.  
 
-please-wait-page-load.png
+---
+<img width="1399" height="540" alt="please-wait-page-load" src="https://github.com/user-attachments/assets/cb4721f7-bfc8-4c3b-9e09-13d92d215e73" />
 
 ##  Objective
 
