@@ -236,3 +236,13 @@ Look at app traces
 * ~~Investigate ad service code~~
 
 * **~~Created by:~~**~~ DimitryZH~~
+
+### Additional Follow-Up Recommendations
+Based on this incident, we can consider the following improvements:
+
+-  Formalize a process for managing debug statements, e.g., using tags like `// DEBUG-START` and `// DEBUG-END`
+-  Add a latency regression test for the `advertisements-service` in CI/CD
+-  Review the effectiveness of the latency monitor:
+  - Was the detection fast enough?
+  - Are the thresholds and alerting conditions ideal?
+  - Consider refining or adding additional monitors
